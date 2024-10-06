@@ -1,3 +1,4 @@
+import { CreateBoard } from './CreateBoard';
 import ProjectsContainer from './ProjectsContainer';
 
 export const Sidebar = () => {
@@ -7,8 +8,9 @@ export const Sidebar = () => {
         <h1 className="text-xl font-semibold mb-4">Projects</h1>
         <ProjectsContainer />
       </div>
-      <div>test</div>
-      {/* <CreateBoard /> */}
+      <div>
+        <CreateBoard />
+      </div>
     </div>
   );
 };
