@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useAuthUser } from '../../context/UserContext';
 import { EditBoard } from './EditBoard';
 import { DeleteBoard } from './DeleteBoard';
+import { useSelectedBoardContext } from '../../context/SelectedBoardContext';
 
 export default function ProjectsContainer() {
   const { user } = useAuthUser();
@@ -32,11 +33,7 @@ export default function ProjectsContainer() {
   );
 
   if (!filteredBoards || filteredBoards.length === 0) {
-    return (
-      <div className="text-gray-500">
-        No boards found. Create a new board to get started.
-      </div>
-    );
+    return <div>No boards found. Create a new board to get started.</div>;
   }
 
   return (
@@ -50,9 +47,15 @@ export default function ProjectsContainer() {
 
 function BoardCard({ board }: { board: IBoard }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { selectedBoard, setSelectedBoard } = useSelectedBoardContext();
 
   return (
-    <Card className="w-full flex items-center h-12 mb-2 transition-colors cursor-pointer rounded-md shadow-sm border border-gray-200 dark:border-indigo-800 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-indigo-300">
+    <Card
+      onClick={() => setSelectedBoard(board)}
+      className={`w-full flex items-center h-12 mb-2 transition-colors cursor-pointer rounded-md shadow-sm border border-gray-200 dark:border-indigo-800 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-indigo-300 ${
+        selectedBoard === board && 'border-green-700 dark:border-green-300'
+      }`}
+    >
       <div className="flex items-center w-full p-2">
         <img
           src={board.board_image}
