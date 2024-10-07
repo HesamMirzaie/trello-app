@@ -9,12 +9,12 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
-import { useUser } from '../context/UserContext';
 import { useTheme } from '../context/ThemeContext';
+import { useAuthUser } from '../context/UserContext';
 
 export const HomePage = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user } = useAuthUser();
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   useEffect(() => {

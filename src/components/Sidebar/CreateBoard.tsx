@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import { IBoard } from '../types/Board';
-import { useUser } from '../context/UserContext';
+import { IBoard } from '../../types/Board';
 import {
   Dialog,
   DialogContent,
@@ -14,19 +13,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './ui/dialog';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
+} from '../ui/dialog';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
 import { createAvatar } from '@dicebear/core';
 import { icons } from '@dicebear/collection';
+import { useAuthUser } from '../../context/UserContext';
 
 export const CreateBoard = () => {
   const [newBoardTitle, setNewBoardTitle] = useState<string>('');
   const [newBoardDescription, setNewBoardDescription] = useState<string>('');
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
-  const { user } = useUser();
+  const { user } = useAuthUser();
   const avatar = createAvatar(icons);
 
   const createBoardMutation = useMutation({
@@ -67,12 +67,12 @@ export const CreateBoard = () => {
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button
-          className="px-4 py-2 flex items-center space-x-2 bg-blue-500 text-white hover:bg-blue-600 dark:bg-indigo-600 dark:hover:bg-indigo-700 transition-colors duration-200"
+          className=" w-full px-4 py-2 flex items-center space-x-2 border-dashed  border-blue-600 text-blue-600 hover:text-blue-600 dark:border-indigo-600 dark:text-indigo-300"
           variant="outline"
           onClick={() => setIsDialogOpen(true)}
         >
           <Plus className="h-5 w-5" />
-          <span>Create Board</span>
+          <span>Add Project</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto">

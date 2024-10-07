@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { IUser } from '../types/User';
-import { useUser } from '../context/UserContext';
 
 import { AlertCircle } from 'lucide-react';
 import {
@@ -19,6 +18,7 @@ import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { Alert, AlertDescription } from '../components/ui/alert';
+import { useAuthUser } from '../context/UserContext';
 
 type Inputs = {
   email: string;
@@ -27,7 +27,7 @@ type Inputs = {
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { login } = useUser();
+  const { login } = useAuthUser();
   const [authError, setAuthError] = useState('');
 
   const {
@@ -64,7 +64,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">

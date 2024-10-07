@@ -11,6 +11,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Login } from './pages/Login';
 import { SignUp } from './pages/SignUp';
 import { Dashboard } from './pages/Dashboard';
+import { SelectedBoardProvider } from './context/SelectedBoardContext';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -39,9 +40,11 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <UserProvider>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
+        <SelectedBoardProvider>
+          <ThemeProvider>
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </SelectedBoardProvider>
       </UserProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

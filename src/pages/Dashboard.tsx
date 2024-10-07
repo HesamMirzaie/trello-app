@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../context/UserContext';
-import { Sidebar } from '../components/Sidebar';
+import { Sidebar } from '../components/Sidebar/Sidebar';
+import { useAuthUser } from '../context/UserContext';
+import { KanbanBoard } from '../components/Kanban Board/KanbanBoard';
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const { user } = useUser();
+  const { user } = useAuthUser();
 
   // Check if there is a user or not
   useEffect(() => {
@@ -15,8 +16,9 @@ export const Dashboard = () => {
   }, [user]);
 
   return (
-    <div className=" w-full h-screen flex overflow-y-hidden bg-gray-100">
+    <div className=" w-full h-screen flex overflow-y-hidden">
       <Sidebar />
+      <KanbanBoard />
     </div>
   );
 };

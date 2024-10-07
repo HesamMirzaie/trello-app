@@ -1,19 +1,21 @@
 import axios from 'axios';
-import { useUser } from '../context/UserContext';
-import { IBoard } from '../types/Board';
+import { IBoard } from '../../types/Board';
 import { useQuery } from '@tanstack/react-query';
-import { ScrollArea } from './ui/scroll-area';
+import { ScrollArea } from '../ui/scroll-area';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+} from '../ui/dropdown-menu';
 import { EllipsisVertical } from 'lucide-react';
-import { Card } from './ui/card';
+import { Card } from '../ui/card';
 import { useState } from 'react';
+import { useAuthUser } from '../../context/UserContext';
+import { EditBoard } from './EditBoard';
+import { DeleteBoard } from './DeleteBoard';
 
 export default function ProjectsContainer() {
-  const { user } = useUser();
+  const { user } = useAuthUser();
 
   const fetchBoards = async (): Promise<IBoard[]> => {
     const response = await axios.get('http://localhost:3000/boards');
@@ -50,9 +52,7 @@ function BoardCard({ board }: { board: IBoard }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
-    <Card
-      className={`w-full flex items-center h-12 mb-2 transition-colors cursor-pointer rounded-md shadow-sm border `}
-    >
+    <Card className="w-full flex items-center h-12 mb-2 transition-colors cursor-pointer rounded-md shadow-sm border border-gray-200 dark:border-indigo-800 hover:bg-gray-100 dark:hover:bg-gray-800 dark:text-indigo-300">
       <div className="flex items-center w-full p-2">
         <img
           src={board.board_image}
@@ -72,8 +72,8 @@ function BoardCard({ board }: { board: IBoard }) {
             className="space-y-1 bg-white dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-700 rounded-md shadow-lg p-2 w-32"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* <EditBoard boardId={board.id} />
-            <DeleteBoard boardId={board.id} /> */}
+            <EditBoard boardId={board.id} />
+            <DeleteBoard boardId={board.id} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

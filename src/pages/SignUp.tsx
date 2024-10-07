@@ -4,7 +4,9 @@ import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-import { User } from '@/types/types';
+import { IUser } from '../types/User';
+import { createAvatar } from '@dicebear/core';
+import { bigSmile } from '@dicebear/collection';
 
 type SignUpFormValues = {
   username: string;
@@ -27,8 +29,10 @@ export function SignUp() {
 
   const password = watch('password');
 
+  const avatar = createAvatar(bigSmile);
+
   const userMutation = useMutation({
-    mutationFn: (newUser: User) => {
+    mutationFn: (newUser: IUser) => {
       return axios.post('http://localhost:3000/users', newUser);
     },
     onSuccess: () => {
@@ -43,10 +47,11 @@ export function SignUp() {
   });
 
   const onSubmit: SubmitHandler<SignUpFormValues> = async (data) => {
-    const newUser: User = {
+    const newUser: IUser = {
       id: uuidv4(),
       username: data.username,
       email: data.email,
+      profile_picture: avatar.toDataUri(),
       password: data.password,
     };
     try {
