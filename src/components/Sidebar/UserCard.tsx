@@ -10,7 +10,7 @@ export const UserCard = () => {
       size="icon"
     >
       <img src={user?.profile_picture} alt="profile" className=" w-5 h-5" />
-      {user?.username}
+      <p className="truncate">{user?.username}</p>
     </Button>
   );
 };

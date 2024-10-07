@@ -9,7 +9,7 @@ import {
 } from '../ui/dropdown-menu';
 import { EllipsisVertical } from 'lucide-react';
 import { Card } from '../ui/card';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthUser } from '../../context/UserContext';
 import { EditBoard } from './EditBoard';
 import { DeleteBoard } from './DeleteBoard';
@@ -48,6 +48,13 @@ export default function ProjectsContainer() {
 function BoardCard({ board }: { board: IBoard }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { selectedBoard, setSelectedBoard } = useSelectedBoardContext();
+
+  // Effect to reset selected card when data changes
+  useEffect(() => {
+    if (board) {
+      setSelectedBoard(board);
+    }
+  }, [board]);
 
   return (
     <Card

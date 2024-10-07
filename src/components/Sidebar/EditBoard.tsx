@@ -56,6 +56,7 @@ export const EditBoard = ({ boardId }: EditBoardButtonProps) => {
         id: editBoard.id,
         board_title: editBoard.board_title,
         board_description: editBoard.board_description,
+        board_image: editBoard.board_image,
         board_users: editBoard.board_users,
       };
       await axios.put(

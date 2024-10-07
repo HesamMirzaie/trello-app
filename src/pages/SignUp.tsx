@@ -62,7 +62,7 @@ export function SignUp() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 text-black">
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
         <div className="space-y-2 mb-4">
           <h1 className="text-2xl font-bold text-center">Sign Up</h1>
