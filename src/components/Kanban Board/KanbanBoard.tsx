@@ -20,7 +20,6 @@ export const KanbanBoard = () => {
     <div className="min-h-full w-full overflow-x-auto ">
       <KanbanHeader />
       <div className="p-4 overflow-x-hidden">
-        {!selectedBoard && <p>Please Select from one of the boards</p>}
         {selectedBoard && JSON.stringify(selectedBoard)}
       </div>
       {/* <div className="flex gap-4 p-4">

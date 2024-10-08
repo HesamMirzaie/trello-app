@@ -16,7 +16,7 @@ export const Dashboard = () => {
   }, [user]);
 
   return (
-    <div className=" w-full h-screen flex overflow-y-hidden">
+    <div className=" w-full h-screen flex ">
       <Sidebar />
       <KanbanBoard />
     </div>

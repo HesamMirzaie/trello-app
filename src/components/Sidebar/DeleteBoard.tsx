@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '../ui/alert-dialog';
+import { useSelectedBoardContext } from '../../context/SelectedBoardContext';
 
 interface DeleteBoardProps {
   boardId: IBoard['id'];
@@ -23,6 +24,7 @@ interface DeleteBoardProps {
 export const DeleteBoard = ({ boardId }: DeleteBoardProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const queryClient = useQueryClient();
+  const { selectedBoard, setSelectedBoard } = useSelectedBoardContext();
 
   const deleteBoardMutation = useMutation({
     mutationFn: async (id: string) => {
@@ -41,6 +43,9 @@ export const DeleteBoard = ({ boardId }: DeleteBoardProps) => {
 
   const handleDelete = () => {
     deleteBoardMutation.mutate(boardId);
+    if (selectedBoard?.id === boardId) {
+      setSelectedBoard(null);
+    }
   };
 
   return (

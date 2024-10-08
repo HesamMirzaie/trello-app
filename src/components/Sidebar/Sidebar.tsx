@@ -10,8 +10,11 @@ export const Sidebar = () => {
       <div className=" flex-1">
         <h1 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
           Projects
-        </h1>{' '}
+        </h1>
         <ProjectsContainer />
+        <h1 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+          Users
+        </h1>
       </div>
       <div className=" w-full space-y-2">
         <DarkModeToggle />

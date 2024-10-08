@@ -37,7 +37,7 @@ export default function ProjectsContainer() {
   }
 
   return (
-    <ScrollArea className="max-h-[200px] pr-4">
+    <ScrollArea className="max-h-[190px] pr-4 pt-2 mb-2 overflow-y-auto scrollbar-hidden">
       {filteredBoards.map((board) => (
         <BoardCard key={board.id} board={board} />
       ))}
@@ -69,7 +69,9 @@ function BoardCard({ board }: { board: IBoard }) {
           alt="img"
           className=" w-6 h-6 rounded-md"
         />
-        <p className="flex-1 ml-2 text-lg font-medium">{board.board_title}</p>
+        <p className="flex-1 ml-2 text-lg font-medium truncate ">
+          {board.board_title}
+        </p>
         <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
           <DropdownMenuTrigger
             onClick={(e) => e.stopPropagation()}

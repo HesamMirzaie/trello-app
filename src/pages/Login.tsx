@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
@@ -19,6 +17,7 @@ import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { useAuthUser } from '../context/UserContext';
+import { useFetchUsers } from '../hooks/useFetchUsers';
 
 type Inputs = {
   email: string;
@@ -29,18 +28,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuthUser();
   const [authError, setAuthError] = useState('');
-
-  const {
-    data: users,
-    isLoading: fetchLoading,
-    error: fetchError,
-  } = useQuery({
-    queryKey: ['users'],
-    queryFn: async () => {
-      const response = await axios.get('http://localhost:3000/users');
-      return response.data;
-    },
-  });
+  const { users, fetchLoading, fetchError } = useFetchUsers();
 
   const {
     register,
@@ -55,8 +43,8 @@ export const Login = () => {
     );
 
     if (foundUser) {
-      const { password, ...userWithoutPassword } = foundUser;
-      login(userWithoutPassword);
+      // TODO: Remove password from local storage user data
+      login(foundUser);
       navigate('/dashboard');
     } else {
       setAuthError('Invalid email or password');

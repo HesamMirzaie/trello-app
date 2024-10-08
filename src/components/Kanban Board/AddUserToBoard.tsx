@@ -1,6 +1,6 @@
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import {
   Dialog,
@@ -12,49 +12,49 @@ import {
   DialogTrigger,
 } from '../ui/dialog';
 import { Button } from '../ui/button';
-import { Select, SelectTrigger, SelectValue } from '../ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
+import { IUser } from '../../types/User';
+import { useSelectedBoardContext } from '../../context/SelectedBoardContext';
+import { useFetchUsers } from '../../hooks/useFetchUsers';
 
 export const AddUserToBoardButton = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newUser, setNewUser] = useState('');
   const queryClient = useQueryClient();
+  const { selectedBoard } = useSelectedBoardContext();
+  const { users, fetchLoading } = useFetchUsers();
 
-  //   const addUserToBoard = async () => {
-  //     const response = await axios.patch(
-  //       `http://localhost:3000/boards/${selectedBoard.id}`,
-  //       {}
-  //     );
-  //     return response.data;
-  //   };
+  const addUserToBoard = async () => {
+    const response = await axios.patch(
+      `http://localhost:3000/boards/${selectedBoard!.id}`,
+      {}
+    );
+    return response.data;
+  };
 
-  //   const mutation = useMutation({
-  //     mutationFn: addUserToBoard,
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries({ queryKey: ['boards'] });
-  //       setIsDialogOpen(false);
-  //       setNewUser('');
-  //     },
-  //     onError: (error) => {
-  //       console.error('Error adding user:', error);
-  //       alert('Failed to add user. Please try again.');
-  //     },
-  //   });
+  const mutation = useMutation({
+    mutationFn: addUserToBoard,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['boards'] });
+      setIsDialogOpen(false);
+      setNewUser('');
+    },
+    onError: (error) => {
+      alert(`${error} | Failed to add user. Please try again.`);
+    },
+  });
 
-  //   const handleAddUser = () => {
-  //     if (newUser) {
-  //       mutation.mutate();
-  //     }
-  //   };
-
-  //   async function fetchUsers() {
-  //     const response = await axios.get('http://localhost:3000/users');
-  //     return response.data;
-  //   }
-
-  //   const { data: users, isLoading } = useQuery({
-  //     queryKey: ['users'],
-  //     queryFn: fetchUsers,
-  //   });
+  const handleAddUser = () => {
+    if (newUser) {
+      mutation.mutate();
+    }
+  };
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -62,7 +62,8 @@ export const AddUserToBoardButton = () => {
         <Button
           size="sm"
           variant="outline"
-          className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:text-white transition-colors duration-200"
+          disabled={!selectedBoard}
+          className="bg-blue-500 hover:bg-blue-600 text-white hover:text-whitex dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:text-white transition-colors duration-200"
         >
           <Plus className="h-5 w-5 mr-2" />
           <span>Add Member</span>
@@ -85,7 +86,7 @@ export const AddUserToBoardButton = () => {
             >
               User
             </label>
-            {/* {isLoading ? (
+            {fetchLoading ? (
               <p className="col-span-3 text-gray-600 dark:text-gray-400">
                 Loading users...
               </p>
@@ -109,12 +110,12 @@ export const AddUserToBoardButton = () => {
                   ))}
                 </SelectContent>
               </Select>
-            )} */}
+            )}
           </div>
         </div>
         <DialogFooter>
           <Button
-            // onClick={handleAddUser}
+            onClick={handleAddUser}
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:text-white transition-colors duration-200"
           >
