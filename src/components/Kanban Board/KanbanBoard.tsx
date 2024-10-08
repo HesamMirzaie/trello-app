@@ -1,6 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { IColumn } from '../../types/Column';
 import { KanbanHeader } from './KanbanHeader';
 import { useSelectedBoardContext } from '../../context/SelectedBoardContext';
 

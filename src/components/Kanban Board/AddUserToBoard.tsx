@@ -31,11 +31,26 @@ export const AddUserToBoardButton = () => {
   const { users, fetchLoading } = useFetchUsers();
 
   const addUserToBoard = async () => {
-    const response = await axios.patch(
-      `http://localhost:3000/boards/${selectedBoard!.id}`,
-      {}
-    );
-    return response.data;
+    try {
+      // Fetch the current board users
+      const userAlreadyExists = selectedBoard!.board_users.some(
+        (email) => email === newUser
+      );
+
+      if (userAlreadyExists) return;
+
+      // If user doesn't exist, proceed with adding the user
+      const response = await axios.patch(
+        `http://localhost:3000/boards/${selectedBoard!.id}`,
+        {
+          board_users: [...selectedBoard!.board_users, newUser],
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const mutation = useMutation({
