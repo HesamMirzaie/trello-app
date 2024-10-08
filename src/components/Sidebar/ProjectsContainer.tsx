@@ -2,18 +2,14 @@ import axios from 'axios';
 import { IBoard } from '../../types/Board';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollArea } from '../ui/scroll-area';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { EllipsisVertical } from 'lucide-react';
+
 import { Card } from '../ui/card';
 import { useEffect, useState } from 'react';
 import { useAuthUser } from '../../context/UserContext';
 import { EditBoard } from './EditBoard';
 import { DeleteBoard } from './DeleteBoard';
 import { useSelectedBoardContext } from '../../context/SelectedBoardContext';
+import { EllipsisButton } from '../ui/EllipsisButton';
 
 export default function ProjectsContainer() {
   const { user } = useAuthUser();
@@ -46,7 +42,6 @@ export default function ProjectsContainer() {
 }
 
 function BoardCard({ board }: { board: IBoard }) {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { selectedBoard, setSelectedBoard } = useSelectedBoardContext();
 
   // Effect to reset selected card when data changes
@@ -72,22 +67,10 @@ function BoardCard({ board }: { board: IBoard }) {
         <p className="flex-1 ml-2 text-lg font-medium truncate ">
           {board.board_title}
         </p>
-        <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
-          <DropdownMenuTrigger
-            onClick={(e) => e.stopPropagation()}
-            aria-label="Board options"
-            asChild
-          >
-            <EllipsisVertical className=" text-gray-600" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="space-y-1 bg-white dark:bg-gray-800 dark:text-gray-200 border dark:border-gray-700 rounded-md shadow-lg p-2 w-32"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <EditBoard boardId={board.id} />
-            <DeleteBoard boardId={board.id} />
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <EllipsisButton>
+          <EditBoard boardId={board.id} />
+          <DeleteBoard boardId={board.id} />
+        </EllipsisButton>
       </div>
     </Card>
   );

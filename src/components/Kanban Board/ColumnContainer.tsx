@@ -1,4 +1,5 @@
 import { IColumn } from '../../types/Column';
+import { EllipsisButton } from '../ui/EllipsisButton';
 
 interface ColumnContainerProps {
   column: IColumn;
@@ -10,7 +11,7 @@ export const ColumnContainer = ({ column }: ColumnContainerProps) => {
   return (
     <div className=" w-[350px] h-[500px] max-h-[500px] flex flex-col">
       {/* Column title */}
-      <div className=" cursor-grab font-bold p-3 flex items-center">
+      <div className=" font-bold p-3 flex items-center">
         <div className=" flex flex-1 gap-x-2">
           <div className=" w-1.5 h-1.5 bg-green-700 rounded-full my-auto" />
           <div className=" text-lg">{column.column_title}</div>
@@ -18,7 +19,7 @@ export const ColumnContainer = ({ column }: ColumnContainerProps) => {
             <div>4</div>
           </div>
         </div>
-        {/* <ColumnEllipsis /> */}
+        <EllipsisButton></EllipsisButton>
       </div>
       {/* <CreateTask /> */}
       <div className="flex-1">{/* Task placeholder */}</div>
