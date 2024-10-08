@@ -1,5 +1,4 @@
 import { Plus } from 'lucide-react';
-
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -23,6 +22,8 @@ export const CreateColumn = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const { selectedBoard } = useSelectedBoardContext();
 
+  const queryClient = useQueryClient(); // Access the QueryClient
+
   const addColumnMutation = useMutation({
     mutationFn: async (newCol: IColumn) => {
       const response = await axios.post(
@@ -30,6 +31,12 @@ export const CreateColumn = () => {
         newCol
       );
       return response.data;
+    },
+    onSuccess: () => {
+      // Invalidate the 'Columns' query to trigger a refetch
+      queryClient.invalidateQueries({
+        queryKey: ['Columns', selectedBoard?.id],
+      });
     },
   });
 

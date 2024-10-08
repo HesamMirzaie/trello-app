@@ -42,6 +42,16 @@
       "id": "33b0605d-ec27-448c-9194-86fc8984c9ec",
       "column_title": "TODO",
       "boardId": "000386ec-b468-4799-968f-d777b56f232e"
+    },
+    {
+      "id": "2def887f-e81e-42f7-a394-63cd5e7a162e",
+      "column_title": "Todo",
+      "boardId": "0d6c314f-e76a-4a8b-aee6-ac758f3d8fcb"
+    },
+    {
+      "id": "242353e2-797e-4165-ad22-2072df03d237",
+      "column_title": "Completed",
+      "boardId": "0d6c314f-e76a-4a8b-aee6-ac758f3d8fcb"
     }
   ]
 }

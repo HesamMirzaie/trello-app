@@ -7,17 +7,18 @@ import UsersContainer from './UsersContainer';
 
 export const Sidebar = () => {
   return (
-    <div className="flex flex-col h-full w-64 p-4 bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800">
-      <div className=" flex-1">
-        <h1 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col justify-between h-full w-64 p-4 bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-800">
+      <div>
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
           Projects
         </h1>
         <ProjectsContainer />
-        <h1 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
           Users
         </h1>
         <UsersContainer />
       </div>
+
       <div className=" w-full space-y-2">
         <DarkModeToggle />
         <div className=" flex items-center gap-x-1">
