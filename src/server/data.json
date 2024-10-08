@@ -37,5 +37,11 @@
       ]
     }
   ],
-  "columns": []
+  "columns": [
+    {
+      "id": "33b0605d-ec27-448c-9194-86fc8984c9ec",
+      "column_title": "TODO",
+      "boardId": "000386ec-b468-4799-968f-d777b56f232e"
+    }
+  ]
 }

@@ -1,5 +1,6 @@
 import { KanbanHeader } from './KanbanHeader';
 import { useSelectedBoardContext } from '../../context/SelectedBoardContext';
+import { CreateColumn } from './CreateColumn';
 
 export const KanbanBoard = () => {
   const { selectedBoard } = useSelectedBoardContext();
@@ -14,17 +15,16 @@ export const KanbanBoard = () => {
   //   });
 
   return (
-    <div className="min-h-full w-full overflow-x-auto ">
+    <div className="min-h-full w-full">
       <KanbanHeader />
-      <div className="p-4 overflow-x-hidden">
-        {selectedBoard && JSON.stringify(selectedBoard)}
-      </div>
-      {/* <div className="flex gap-4 p-4">
-        {filteredColumns?.map((column) => (
+      {selectedBoard && (
+        <div className="flex gap-4 p-4 overflow-x-auto">
+          {/* {filteredColumns?.map((column) => (
           <ColumnContainer key={column.id} column={column} />
-        ))}
-        <CreateColumn />
-      </div> */}
+        ))} */}
+          <CreateColumn />
+        </div>
+      )}
     </div>
   );
 };

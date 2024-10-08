@@ -3,6 +3,7 @@ import { DarkModeToggle } from './DarkModeToggle';
 import ProjectsContainer from './ProjectsContainer';
 import { UserCard } from './UserCard';
 import { LogoutButton } from './LogoutButton';
+import UsersContainer from './UsersContainer';
 
 export const Sidebar = () => {
   return (
@@ -15,6 +16,7 @@ export const Sidebar = () => {
         <h1 className="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">
           Users
         </h1>
+        <UsersContainer />
       </div>
       <div className=" w-full space-y-2">
         <DarkModeToggle />
