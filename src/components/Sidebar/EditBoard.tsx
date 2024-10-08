@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Edit } from 'lucide-react';
 import { IBoard } from '../../types/Board';
@@ -22,79 +22,59 @@ interface EditBoardButtonProps {
 }
 
 export const EditBoard = ({ boardId }: EditBoardButtonProps) => {
-  const [editBoard, setEditBoard] = useState<IBoard | null>(null);
+  const [boardTitle, setBoardTitle] = useState<string>(''); // Store the board title
+  const [boardDescription, setBoardDescription] = useState<string>(''); // Store the board description
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (isDialogOpen && boardId) {
-      setIsLoading(true);
-      setError(null);
-      const fetchBoard = async () => {
-        try {
-          const response = await axios.get<IBoard>(
-            `http://localhost:3000/boards/${boardId}`
-          );
-          setEditBoard(response.data);
-        } catch (error) {
-          console.error('Error fetching board data:', error);
-          setError('Failed to load board data. Please try again.');
-        } finally {
-          setIsLoading(false);
-        }
-      };
-      fetchBoard();
-    }
-  }, [isDialogOpen, boardId]);
-
-  const updateBoardMutation = useMutation({
-    mutationFn: async () => {
-      if (!editBoard) return;
-      const updatedBoard = {
-        id: editBoard.id,
-        board_title: editBoard.board_title,
-        board_description: editBoard.board_description,
-        board_image: editBoard.board_image,
-        board_users: editBoard.board_users,
-      };
-      await axios.put(
-        `http://localhost:3000/boards/${editBoard.id}`,
-        updatedBoard
+  const { data: boardData } = useQuery({
+    queryKey: ['board', boardId],
+    queryFn: async () => {
+      const response = await axios.get<IBoard>(
+        `http://localhost:3000/boards/${boardId}`
       );
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['boards'] });
-      setEditBoard(null);
-      setIsDialogOpen(false);
-    },
-    onError: (error) => {
-      console.error('Error updating board:', error);
-      setError('Failed to update board. Please try again.');
+      return response.data;
     },
   });
 
+  // Set board title and description when board data is fetched
+  useEffect(() => {
+    if (boardData) {
+      setBoardTitle(boardData.board_title);
+      setBoardDescription(boardData.board_description);
+    }
+  }, [boardData]);
+
+  const updateBoardMutation = useMutation({
+    mutationFn: async () => {
+      await axios.patch(`http://localhost:3000/boards/${boardId}`, {
+        board_title: boardTitle,
+        board_description: boardDescription,
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['boards'] });
+      setIsDialogOpen(false);
+    },
+  });
+
+  // Handle title change
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditBoard((prev) =>
-      prev ? { ...prev, board_title: e.target.value } : null
-    );
+    setBoardTitle(e.target.value);
   };
 
+  // Handle description change
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setEditBoard((prev) =>
-      prev ? { ...prev, board_description: e.target.value } : null
-    );
+    setBoardDescription(e.target.value);
   };
 
+  // Handle updating the board
   const handleUpdateBoard = () => {
-    if (!editBoard?.board_title.trim()) {
-      setError('Board title cannot be empty');
-      return;
+    if (boardTitle.trim() && boardDescription.trim()) {
+      updateBoardMutation.mutate();
     }
-    updateBoardMutation.mutate();
   };
 
   return (
@@ -110,59 +90,52 @@ export const EditBoard = ({ boardId }: EditBoardButtonProps) => {
       </DialogTrigger>
       <DialogContent className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-indigo-400">
             Edit Board
           </DialogTitle>
           <DialogDescription className="text-gray-600 dark:text-gray-400 mt-2">
             Update the title and description of your Kanban board.
           </DialogDescription>
         </DialogHeader>
-        {isLoading ? (
-          <div className="py-6 text-center">Loading board data...</div>
-        ) : error ? (
-          <div className="py-6 text-center text-red-600 dark:text-red-400">
-            {error}
+
+        <div className="grid gap-6 py-6">
+          <div className="space-y-2">
+            <label
+              htmlFor="boardTitle"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Board Title
+            </label>
+            <Input
+              id="boardTitle"
+              placeholder="Enter board title"
+              autoComplete="off"
+              value={boardTitle}
+              onChange={handleTitleChange}
+              className="bg-gray-100 text-gray-800 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:border-indigo-500 dark:focus:ring-indigo-500 rounded-md transition-all duration-200"
+              required
+            />
           </div>
-        ) : (
-          <div className="grid gap-6 py-6">
-            <div className="space-y-2">
-              <label
-                htmlFor="boardTitle"
-                className="text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
-                Board Title
-              </label>
-              <Input
-                id="boardTitle"
-                placeholder="Enter board title"
-                value={editBoard?.board_title || ''}
-                autoComplete="off"
-                onChange={handleTitleChange}
-                className="bg-gray-100 text-gray-800 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:border-blue-400 rounded-md transition-all duration-200 placeholder:text-gray-500 dark:placeholder:text-gray-400"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <label
-                htmlFor="boardDescription"
-                className="text-sm font-medium text-gray-700 dark:text-gray-300"
-              >
-                Board Description
-              </label>
-              <Textarea
-                id="boardDescription"
-                placeholder="Enter board description"
-                value={editBoard?.board_description || ''}
-                onChange={handleDescriptionChange}
-                className="bg-gray-100 text-gray-800 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:border-blue-400 focus:ring-opacity-50 rounded-md transition-all duration-200 min-h-[100px] placeholder:text-gray-500 dark:placeholder:text-gray-400"
-              />
-            </div>
+          <div className="space-y-2">
+            <label
+              htmlFor="boardDescription"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Board Description
+            </label>
+            <Textarea
+              id="boardDescription"
+              placeholder="Enter board description"
+              value={boardDescription}
+              onChange={handleDescriptionChange}
+              className="bg-gray-100 text-gray-800 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:focus:border-indigo-500 dark:focus:ring-indigo-500 rounded-md transition-all duration-200"
+            />
           </div>
-        )}
+        </div>
         <DialogFooter>
           <Button
             onClick={handleUpdateBoard}
-            className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-indigo-600 dark:text-gray-200 dark:hover:bg-indigo-700 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
             Update Board
           </Button>

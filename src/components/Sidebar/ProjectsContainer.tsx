@@ -2,9 +2,8 @@ import axios from 'axios';
 import { IBoard } from '../../types/Board';
 import { useQuery } from '@tanstack/react-query';
 import { ScrollArea } from '../ui/scroll-area';
-
 import { Card } from '../ui/card';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAuthUser } from '../../context/UserContext';
 import { EditBoard } from './EditBoard';
 import { DeleteBoard } from './DeleteBoard';
@@ -29,7 +28,7 @@ export default function ProjectsContainer() {
   );
 
   if (!filteredBoards || filteredBoards.length === 0) {
-    return <div>No boards found. Create a new board to get started.</div>;
+    return <div className=" my-2">No boards found</div>;
   }
 
   return (
@@ -44,7 +43,6 @@ export default function ProjectsContainer() {
 function BoardCard({ board }: { board: IBoard }) {
   const { selectedBoard, setSelectedBoard } = useSelectedBoardContext();
 
-  // Effect to reset selected card when data changes
   useEffect(() => {
     if (board) {
       setSelectedBoard(board);

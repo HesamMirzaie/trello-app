@@ -59,7 +59,7 @@ export const DeleteBoard = ({ boardId }: DeleteBoardProps) => {
           Delete
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-white text-gray-800 dark:bg-gray-800 dark:text-gray-200 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl">
+      <AlertDialogContent className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-lg font-bold text-red-600 dark:text-red-400">
             Confirm Deletion

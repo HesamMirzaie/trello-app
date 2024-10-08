@@ -17,9 +17,9 @@ export const KanbanBoard = () => {
   };
 
   const { data: columns, isLoading } = useQuery({
-    queryKey: ['Columns', selectedBoard?.id],
+    queryKey: ['columns'],
     queryFn: fetchColumns,
-    enabled: !!selectedBoard?.id, // Only run query if selectedBoard.id exists
+    enabled: !!selectedBoard?.id,
   });
 
   if (isLoading) {

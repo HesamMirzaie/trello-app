@@ -35,8 +35,9 @@ export const CreateColumn = () => {
     onSuccess: () => {
       // Invalidate the 'Columns' query to trigger a refetch
       queryClient.invalidateQueries({
-        queryKey: ['Columns', selectedBoard?.id],
+        queryKey: ['columns'],
       });
+      setNewColumnTitle('');
     },
   });
 
