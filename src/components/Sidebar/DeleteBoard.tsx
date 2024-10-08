@@ -26,17 +26,35 @@ export const DeleteBoard = ({ boardId }: DeleteBoardProps) => {
   const queryClient = useQueryClient();
   const { selectedBoard, setSelectedBoard } = useSelectedBoardContext();
 
+  const deleteColumnsByBoardId = async (boardId: string) => {
+    // Get columns that belong to the board
+    const response = await axios.get(
+      `http://localhost:3000/columns?boardId=${boardId}`
+    );
+    const columns = response.data;
+
+    // Delete each column
+    const deletePromises = columns.map((column: { id: string }) =>
+      axios.delete(`http://localhost:3000/columns/${column.id}`)
+    );
+
+    await Promise.all(deletePromises); // Wait for all deletions to complete
+  };
+
   const deleteBoardMutation = useMutation({
     mutationFn: async (id: string) => {
+      // Delete the board first
       await axios.delete(`http://localhost:3000/boards/${id}`);
+      // Then delete the columns associated with the board
+      await deleteColumnsByBoardId(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['boards'] });
+      queryClient.invalidateQueries({ queryKey: ['columns'] }); // Invalidate columns query
       setIsDialogOpen(false);
     },
     onError: (error) => {
       console.error('Error deleting board:', error);
-      // Add user-friendly error handling
       alert('Failed to delete the board. Please try again.');
     },
   });
