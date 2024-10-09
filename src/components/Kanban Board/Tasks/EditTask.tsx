@@ -14,28 +14,39 @@ import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 import { ITask } from '../../../types/Task';
 import { Textarea } from '../../ui/textarea';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../../ui/select';
+import { useFetchUsers } from '../../../hooks/useFetchUsers';
+import { IUser } from '../../../types/User';
 
 interface EditColumnProps {
-  taskId: ITask['id'];
+  task: ITask;
 }
 
-export const EditTask = ({ taskId }: EditColumnProps) => {
+export const EditTask = ({ task }: EditColumnProps) => {
   const [newTitle, setNewTitle] = useState<string>(''); // Store the new column title
-  const [newDescription, setDescription] = useState<string>(''); // Store the new column title
+  const [newDescription, setDescription] = useState<string>(''); // Store the new column description
+  const [newUser, setNewUser] = useState(''); // Store selected user's email
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
+  const { users, fetchLoading } = useFetchUsers(); // Fetch all users
 
   const { data: taskData } = useQuery({
-    queryKey: ['tasks'],
+    queryKey: ['tasks', task.id],
     queryFn: async () => {
       const response = await axios.get<ITask>(
-        `http://localhost:3000/tasks/${taskId}`
+        `http://localhost:3000/tasks/${task.id}`
       );
       return response.data;
     },
   });
 
-  // Set new title when column data is fetched
+  // Set new title and description when column data is fetched
   useEffect(() => {
     if (taskData) {
       setNewTitle(taskData.task_title);
@@ -43,15 +54,26 @@ export const EditTask = ({ taskId }: EditColumnProps) => {
     }
   }, [taskData]);
 
-  const updateColumnMutation = useMutation({
+  const updateTaskMutation = useMutation({
     mutationFn: async () => {
-      await axios.patch(`http://localhost:3000/tasks/${taskId}`, {
+      const userAlreadyExists = task.task_users.some(
+        (email) => email === newUser
+      );
+      if (userAlreadyExists) {
+        console.log('User already exists in the task');
+      }
+      await axios.patch(`http://localhost:3000/tasks/${task.id}`, {
         task_title: newTitle,
+        task_description: newDescription,
+        task_users: [...task.task_users, newUser],
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['tasks', task.id] }); // Invalidate specific task query
       setIsDialogOpen(false);
+      setNewTitle('');
+      setDescription('');
+      setNewUser('');
     },
   });
 
@@ -67,10 +89,10 @@ export const EditTask = ({ taskId }: EditColumnProps) => {
     setDescription(e.target.value);
   };
 
-  // Handle updating the column title
+  // Handle updating the column title and description
   const handleSave = () => {
     if (newTitle.trim()) {
-      updateColumnMutation.mutate();
+      updateTaskMutation.mutate();
     }
   };
 
@@ -88,7 +110,7 @@ export const EditTask = ({ taskId }: EditColumnProps) => {
       <DialogContent className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-indigo-400">
-            Edit Column Title
+            Edit Task
           </DialogTitle>
         </DialogHeader>
 
@@ -98,7 +120,7 @@ export const EditTask = ({ taskId }: EditColumnProps) => {
               htmlFor="boardTitle"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Board Title
+              Task Title
             </label>
             <Input
               id="boardTitle"
@@ -115,7 +137,7 @@ export const EditTask = ({ taskId }: EditColumnProps) => {
               htmlFor="boardDescription"
               className="text-sm font-medium text-gray-700 dark:text-gray-300"
             >
-              Board Description
+              Task Description
             </label>
             <Textarea
               id="boardDescription"
@@ -126,6 +148,38 @@ export const EditTask = ({ taskId }: EditColumnProps) => {
               required
             />
           </div>
+
+          {/* Add User to Task */}
+          <div className="space-y-2">
+            <label
+              htmlFor="userSelect"
+              className="text-sm font-medium text-gray-700 dark:text-gray-300"
+            >
+              Add User
+            </label>
+            {fetchLoading ? (
+              <p className="text-gray-600 dark:text-gray-400">
+                Loading users...
+              </p>
+            ) : (
+              <Select value={newUser} onValueChange={setNewUser}>
+                <SelectTrigger className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-indigo-500 focus:ring-blue-500 dark:focus:ring-indigo-500">
+                  <SelectValue placeholder="Select a user" />
+                </SelectTrigger>
+                <SelectContent className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                  {users?.map((user: IUser) => (
+                    <SelectItem
+                      key={user.id}
+                      value={user.email}
+                      className="text-gray-900 dark:text-gray-100 hover:bg-blue-100 dark:hover:bg-indigo-900 cursor-pointer"
+                    >
+                      {user.email}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
         </div>
 
         <DialogFooter>
@@ -133,7 +187,7 @@ export const EditTask = ({ taskId }: EditColumnProps) => {
             onClick={handleSave}
             className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-indigo-600 dark:text-gray-200 dark:hover:bg-indigo-700 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
-            Update Column
+            Update Task
           </Button>
         </DialogFooter>
       </DialogContent>

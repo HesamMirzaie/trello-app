@@ -62,7 +62,7 @@ function TaskCard({ task }: { task: ITask }) {
           <p className="">Title</p>
         </Badge>
         <EllipsisButton>
-          <EditTask taskId={task.id} />
+          <EditTask task={task} />
           <DeleteTask taskId={task.id} />
         </EllipsisButton>
       </div>

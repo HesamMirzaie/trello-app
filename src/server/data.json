@@ -40,24 +40,5 @@
       "boardId": "afb21a5f-92c4-4ddd-bade-161b19ba17ff"
     }
   ],
-  "tasks": [
-    {
-      "id": "e599f393-dbb5-4637-b651-0504d8c87353",
-      "task_title": "Test 1",
-      "task_description": "Test Description",
-      "task_users": [
-        "ihe3am@gmail.com"
-      ],
-      "columnId": "eb736730-5910-4b14-9b55-fef54ebfe1c9"
-    },
-    {
-      "id": "bb7c0df8-625c-417f-bba8-861260e888a1",
-      "task_title": "Task 3",
-      "task_description": "Task Description",
-      "task_users": [
-        "ihe3am@gmail.com"
-      ],
-      "columnId": "eb736730-5910-4b14-9b55-fef54ebfe1c9"
-    }
-  ]
+  "tasks": []
 }
