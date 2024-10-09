@@ -33,12 +33,8 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
   const { user } = useAuthUser();
 
   // Fetch existing tasks
-  const { data: tasks = [] } = useQuery<ITask[]>({
+  const { data: tasks } = useQuery<ITask[]>({
     queryKey: ['tasks'],
-    queryFn: async () => {
-      const response = await axios.get('http://localhost:3000/tasks');
-      return response.data;
-    },
   });
 
   // Add task mutation
@@ -62,7 +58,6 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
       task_description: newTaskDescription,
       task_users: [user.email],
       columnId,
-      order: tasks.length,
     };
 
     addTaskMutation.mutate(newTask);

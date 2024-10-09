@@ -4,5 +4,4 @@ export interface ITask {
   task_description: string;
   task_users: string[];
   columnId: string;
-  order: number;
 }
