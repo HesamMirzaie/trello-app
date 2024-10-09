@@ -19,6 +19,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ITask } from '../../../types/Task';
 import { IColumn } from '../../../types/Column';
 import { useAuthUser } from '../../../context/UserContext';
+import { useSelectedBoardContext } from '../../../context/SelectedBoardContext';
 
 interface CreateTaskProps {
   columnId: IColumn['id'];
@@ -28,9 +29,9 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
   const [newTaskTitle, setNewTaskTitle] = useState<string>('');
   const [newTaskDescription, setNewTaskDescription] = useState<string>('');
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-
   const queryClient = useQueryClient();
   const { user } = useAuthUser();
+  const { selectedBoard } = useSelectedBoardContext();
 
   // Fetch existing tasks
   const { data: tasks } = useQuery<ITask[]>({
@@ -58,6 +59,7 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
       task_description: newTaskDescription,
       task_users: [user.email],
       columnId,
+      BoardId: selectedBoard!.id,
     };
 
     addTaskMutation.mutate(newTask);

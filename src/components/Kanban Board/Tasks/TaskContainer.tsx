@@ -8,42 +8,32 @@ import { EllipsisButton } from '../../ui/EllipsisButton';
 import { Badge } from '../../ui/badge';
 import { EditTask } from './EditTask';
 import { DeleteTask } from './DeleteTask';
+import { Avatar, AvatarFallback } from '../../ui/avatar';
 
 interface TaskContainerProps {
   columnId: IColumn['id'];
 }
 
 export const TaskContainer = ({ columnId }: TaskContainerProps) => {
-  const {
-    data: tasks,
-    isLoading,
-    isError,
-  } = useQuery<ITask[]>({
-    queryKey: ['tasks', columnId],
+  const { data: tasks, isLoading } = useQuery<ITask[]>({
+    queryKey: ['tasks'],
     queryFn: async () => {
-      const response = await axios.get(
-        `http://localhost:3000/tasks?columnId=${columnId}`
-      );
+      const response = await axios.get(`http://localhost:3000/tasks`);
       return response.data;
     },
   });
+
+  const filteredTasks = tasks?.filter((task) => task.columnId === columnId);
 
   if (isLoading) {
     return <div>Loading tasks...</div>;
   }
 
-  if (isError) {
-    return <div>Error loading tasks.</div>;
-  }
-
-  // If no tasks are found
-  if (!tasks || tasks.length === 0) {
-    return <div className="my-2">No Task found</div>;
-  }
+  if (!filteredTasks) return;
 
   return (
-    <ScrollArea className="w-full h-full overflow-y-auto scrollbar-hidden  ">
-      {tasks.map((task) => (
+    <ScrollArea className="w-full h-full max-h-[500px] overflow-y-auto scrollbar-hidden  ">
+      {filteredTasks.map((task) => (
         <TaskCard key={task.id} task={task} />
       ))}
     </ScrollArea>
@@ -52,7 +42,7 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
 
 function TaskCard({ task }: { task: ITask }) {
   return (
-    <Card className="w-full h-48 my-2 flex flex-col ">
+    <Card className="w-full h-48 max-h-48 my-2 flex flex-col dark:bg-gray-950 ">
       {/* Header */}
       <div className="flex justify-between p-2">
         <Badge
@@ -74,11 +64,11 @@ function TaskCard({ task }: { task: ITask }) {
         </h2>
       </div>
       {/* Footer */}
-      <div className=" border-t">
+      <div className=" p-2 flex justify-end">
         {task.task_users.map((user) => (
-          <p key={user} className=" p-2">
-            {[...user].splice(0, 2).join('')}
-          </p>
+          <Avatar key={user} className="ml-[-10px]">
+            <AvatarFallback>{[...user].splice(0, 2).join('')}</AvatarFallback>
+          </Avatar>
         ))}
       </div>
     </Card>
