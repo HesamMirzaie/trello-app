@@ -69,7 +69,7 @@ export const EditTask = ({ task }: EditColumnProps) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['tasks', task.id] }); // Invalidate specific task query
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
       setIsDialogOpen(false);
       setNewTitle('');
       setDescription('');

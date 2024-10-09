@@ -93,6 +93,7 @@ export const CreateColumn = () => {
         <DialogFooter>
           <Button
             onClick={addColumn}
+            disabled={!newColumnTitle || addColumnMutation.isPending}
             className="bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
             Add Column
