@@ -22,13 +22,13 @@ interface EditBoardButtonProps {
 }
 
 export const EditBoard = ({ boardId }: EditBoardButtonProps) => {
-  const [boardTitle, setBoardTitle] = useState<string>(''); // Store the board title
-  const [boardDescription, setBoardDescription] = useState<string>(''); // Store the board description
+  const [boardTitle, setBoardTitle] = useState<string>('');
+  const [boardDescription, setBoardDescription] = useState<string>('');
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   const { data: boardData } = useQuery({
-    queryKey: ['board', boardId],
+    queryKey: ['boards', boardId],
     queryFn: async () => {
       const response = await axios.get<IBoard>(
         `http://localhost:3000/boards/${boardId}`

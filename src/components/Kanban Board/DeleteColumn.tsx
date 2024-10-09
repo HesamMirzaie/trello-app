@@ -14,6 +14,7 @@ import { Button } from '../ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { Trash2 } from 'lucide-react';
+
 interface DeleteColumnProps {
   columnId: IColumn['id'];
 }
@@ -22,20 +23,36 @@ export const DeleteColumn = ({ columnId }: DeleteColumnProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const queryClient = useQueryClient();
 
+  const deleteTasksByColumnId = async (columnId: string) => {
+    const { data: tasks } = await axios.get(`http://localhost:3000/tasks`);
+    const tasksToDelete = tasks.filter(
+      (task: any) => task.columnId === columnId
+    );
+
+    // Delete each task individually
+    for (const task of tasksToDelete) {
+      await axios.delete(`http://localhost:3000/tasks/${task.id}`);
+    }
+  };
+
   const deleteColumnMutation = useMutation({
     mutationFn: async () => {
+      // First, delete the tasks related to the column
+      await deleteTasksByColumnId(columnId);
+      // Then, delete the column itself
       await axios.delete(`http://localhost:3000/columns/${columnId}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['columns'] }); // Invalidate the columns query
+      queryClient.invalidateQueries({ queryKey: ['columns'] });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
       setIsDialogOpen(false);
     },
     onError: (error) => {
-      console.error('Error deleting column:', error);
-      // Implement user-friendly error handling here (e.g., toast notifications)
-      alert('Failed to delete the column. Please try again.'); // Consider using a toast instead
+      console.error('Error deleting column or tasks:', error);
+      alert('Failed to delete the column and related tasks. Please try again.');
     },
   });
+
   const handleDelete = () => {
     deleteColumnMutation.mutate();
   };
@@ -58,7 +75,7 @@ export const DeleteColumn = ({ columnId }: DeleteColumnProps) => {
           </AlertDialogTitle>
           <AlertDialogDescription className="text-sm">
             Are you sure you want to delete this column? This action cannot be
-            undone.
+            undone, and all related tasks will also be deleted.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="space-x-2">

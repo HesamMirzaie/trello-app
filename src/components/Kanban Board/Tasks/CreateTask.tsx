@@ -87,7 +87,7 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
 
       <DialogContent className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-indigo-500 rounded-lg shadow-xl max-w-md mx-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+          <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-indigo-400">
             Create a new task
           </DialogTitle>
           <DialogDescription className="text-gray-600 dark:text-gray-400 mt-2">
@@ -109,7 +109,7 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
               value={newTaskTitle}
               autoComplete="off"
               onChange={(e) => setNewTaskTitle(e.target.value)}
-              className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-opacity-50 rounded-md transition-all duration-200 placeholder:text-gray-500 dark:placeholder:text-gray-400"
+              className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-indigo-400 focus:ring focus:ring-blue-500 dark:focus:ring-indigo-400 focus:ring-opacity-50 rounded-md transition-all duration-200 placeholder:text-gray-500 dark:placeholder:text-gray-400"
             />
           </div>
 
@@ -125,7 +125,7 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
               placeholder="Enter task description"
               value={newTaskDescription}
               onChange={(e) => setNewTaskDescription(e.target.value)}
-              className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-400 focus:ring focus:ring-blue-500 dark:focus:ring-blue-400 focus:ring-opacity-50 rounded-md transition-all duration-200 min-h-[100px] placeholder:text-gray-500 dark:placeholder:text-gray-400"
+              className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 border-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-indigo-400 focus:ring focus:ring-blue-500 dark:focus:ring-indigo-400 focus:ring-opacity-50 rounded-md transition-all duration-200 min-h-[100px] placeholder:text-gray-500 dark:placeholder:text-gray-400"
             />
           </div>
         </div>
@@ -136,7 +136,7 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
             disabled={
               !newTaskTitle || !newTaskDescription || addTaskMutation.isPending
             }
-            className="bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
+            className="bg-blue-600 dark:bg-indigo-500 text-white hover:bg-blue-700 dark:hover:bg-indigo-600 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
             {addTaskMutation.isPending ? 'Adding...' : 'Add Task'}
           </Button>

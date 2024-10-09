@@ -8,16 +8,19 @@ import { ColumnContainer } from './ColumnContainer';
 
 export const KanbanBoard = () => {
   const { selectedBoard } = useSelectedBoardContext();
+
   const fetchColumns = async (): Promise<IColumn[]> => {
     if (!selectedBoard?.id) return [];
+
     const response = await axios.get(
       `http://localhost:3000/columns?boardId=${selectedBoard.id}`
     );
+
     return response.data;
   };
 
   const { data: columns, isLoading } = useQuery({
-    queryKey: ['columns'],
+    queryKey: ['columns', selectedBoard?.id],
     queryFn: fetchColumns,
     enabled: !!selectedBoard?.id,
   });

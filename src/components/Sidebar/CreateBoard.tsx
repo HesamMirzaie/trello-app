@@ -122,6 +122,11 @@ export const CreateBoard = () => {
         <DialogFooter>
           <Button
             onClick={handleCreateBoard}
+            disabled={
+              !newBoardTitle ||
+              !newBoardDescription ||
+              createBoardMutation.isPending
+            }
             className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-indigo-600 dark:text-gray-200 dark:hover:bg-indigo-700 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
             Create Board
