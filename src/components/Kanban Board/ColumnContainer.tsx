@@ -9,7 +9,7 @@ interface ColumnContainerProps {
 
 export const ColumnContainer = ({ column }: ColumnContainerProps) => {
   return (
-    <div className=" w-[350px] h-[500px] max-h-[500px] flex flex-col border">
+    <div className=" w-[350px] h-[700px] max-h-[700px] flex flex-col border rounded-md">
       {/* Column title */}
       <div className=" font-bold p-3 flex items-center">
         <div className=" flex flex-1 gap-x-2">

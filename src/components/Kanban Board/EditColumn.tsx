@@ -64,7 +64,7 @@ export const EditColumn = ({ columnId }: EditColumnProps) => {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="w-full text-sm py-1 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 border-blue-200 hover:border-blue-300 dark:border-blue-800 dark:hover:border-blue-700 hover:bg-blue-50 dark:hover:bg-blue-900 transition-colors duration-200"
+          className="w-full text-sm py-1 text-blue-600 hover:text-blue-700 dark:text-indigo-400 dark:hover:text-indigo-300 border-blue-200 hover:border-blue-300 dark:border-indigo-800 dark:hover:border-indigo-700 hover:bg-blue-50 dark:hover:bg-indigo-900 transition-colors duration-200"
         >
           <Edit className="w-4 h-4 mr-2" />
           Edit

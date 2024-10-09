@@ -77,7 +77,6 @@ export const AddUserToBoardButton = () => {
         <Button
           size="sm"
           variant="outline"
-          disabled={!selectedBoard}
           className="bg-blue-500 hover:bg-blue-600 text-white hover:text-whitex dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:text-white transition-colors duration-200"
         >
           <Plus className="h-5 w-5 mr-2" />
