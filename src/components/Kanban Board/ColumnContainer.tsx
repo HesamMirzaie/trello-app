@@ -2,6 +2,7 @@ import { IColumn } from '../../types/Column';
 import { EllipsisButton } from '../ui/EllipsisButton';
 import { DeleteColumn } from './DeleteColumn';
 import { EditColumn } from './EditColumn';
+import { CreateTask } from './Tasks/CreateTask';
 
 interface ColumnContainerProps {
   column: IColumn;
@@ -9,7 +10,7 @@ interface ColumnContainerProps {
 
 export const ColumnContainer = ({ column }: ColumnContainerProps) => {
   return (
-    <div className=" w-[350px] h-[700px] max-h-[700px] flex flex-col border rounded-md">
+    <div className=" w-[350px] h-[700px] max-h-[700px] flex flex-col ">
       {/* Column title */}
       <div className=" font-bold p-3 flex items-center">
         <div className=" flex flex-1 gap-x-2">
@@ -24,7 +25,7 @@ export const ColumnContainer = ({ column }: ColumnContainerProps) => {
           <DeleteColumn columnId={column.id} />
         </EllipsisButton>
       </div>
-      {/* <CreateTask /> */}
+      <CreateTask columnId={column.id} />
       <div className="flex-1">{/* Task placeholder */}</div>
     </div>
   );

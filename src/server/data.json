@@ -39,5 +39,27 @@
       "column_title": "Todo",
       "boardId": "6b6a7879-b61d-4943-8ac3-dd09ece4f0f0"
     }
+  ],
+  "tasks": [
+    {
+      "id": "206c3633-2857-444a-9950-866572b1a65b",
+      "task_title": "Test",
+      "task_description": "Test Desctiption",
+      "task_users": [
+        "mirzaeeh08@gmail.com"
+      ],
+      "columnId": "1e7310b5-c5d1-4e8d-bdc0-7ab4a64d7c10",
+      "order": 0
+    },
+    {
+      "id": "bce035fa-beae-4de4-98e1-0f909fbf675b",
+      "task_title": "Test 2",
+      "task_description": "Test 2 Description",
+      "task_users": [
+        "mirzaeeh08@gmail.com"
+      ],
+      "columnId": "1e7310b5-c5d1-4e8d-bdc0-7ab4a64d7c10",
+      "order": 1
+    }
   ]
 }

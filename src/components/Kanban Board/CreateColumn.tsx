@@ -33,7 +33,6 @@ export const CreateColumn = () => {
       return response.data;
     },
     onSuccess: () => {
-      // Invalidate the 'Columns' query to trigger a refetch
       queryClient.invalidateQueries({
         queryKey: ['columns'],
       });
