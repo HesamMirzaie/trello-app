@@ -5,4 +5,5 @@ export interface ITask {
   task_users: string[];
   columnId: string;
   BoardId: string;
+  order: number;
 }

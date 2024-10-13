@@ -11,7 +11,13 @@ import { DeleteTask } from './DeleteTask';
 import { Avatar, AvatarFallback } from '../../ui/avatar';
 import { useSelectedBoardContext } from '../../../context/SelectedBoardContext';
 import { useEffect, useState } from 'react';
-import { DndContext, closestCenter } from '@dnd-kit/core';
+import {
+  DndContext,
+  MouseSensor,
+  closestCenter,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import {
   SortableContext,
   arrayMove,
@@ -41,6 +47,14 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
       return response.data;
     },
   });
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      // Customize activation constraints
+      activationConstraint: {
+        distance: 5, // Activates drag after moving 5px
+      },
+    })
+  );
 
   useEffect(() => {
     if (tasks) {
@@ -89,7 +103,11 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
 
   return (
     <ScrollArea className="w-full h-full max-h-[500px] p-2 overflow-y-auto scrollbar-hidden">
-      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <DndContext
+        collisionDetection={closestCenter}
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+      >
         <SortableContext
           items={filteredTasks.map((task) => task.id)}
           strategy={verticalListSortingStrategy}

@@ -60,6 +60,7 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
       task_users: [user.email],
       columnId,
       BoardId: selectedBoard!.id,
+      order: 0,
     };
 
     addTaskMutation.mutate(newTask);

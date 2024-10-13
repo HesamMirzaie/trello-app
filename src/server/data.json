@@ -41,9 +41,9 @@
   ],
   "tasks": [
     {
-      "id": "551990a3-f178-40d8-939c-cc00271fc5e6",
-      "task_title": "Deploy project",
-      "task_description": "Deploy project",
+      "id": "4779e77a-9eaa-4361-a98c-e584e1658968",
+      "task_title": "1",
+      "task_description": "1",
       "task_users": [
         "ihe3am@gmail.com"
       ],
@@ -52,15 +52,26 @@
       "order": 1
     },
     {
-      "id": "8eb06aaf-aa38-49fa-8bdb-059e8594d12a",
-      "task_title": " Dnd Functionality",
-      "task_description": "Add Dnd Functionality to app",
+      "id": "8827feb6-5aa3-4328-9acb-1bb857f9bb16",
+      "task_title": "2",
+      "task_description": "2",
       "task_users": [
         "ihe3am@gmail.com"
       ],
       "columnId": "29c761a4-a388-46d0-86ad-39e9a459467c",
       "BoardId": "e8bae0a9-dff9-4482-9289-559be6b37cdf",
       "order": 2
+    },
+    {
+      "id": "d365443b-624b-4c7a-abae-202957acb8f7",
+      "task_title": "3",
+      "task_description": "3",
+      "task_users": [
+        "ihe3am@gmail.com"
+      ],
+      "columnId": "29c761a4-a388-46d0-86ad-39e9a459467c",
+      "BoardId": "e8bae0a9-dff9-4482-9289-559be6b37cdf",
+      "order": 3
     }
   ]
 }
