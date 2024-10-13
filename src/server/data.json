@@ -39,5 +39,28 @@
       "boardId": "e8bae0a9-dff9-4482-9289-559be6b37cdf"
     }
   ],
-  "tasks": []
+  "tasks": [
+    {
+      "id": "551990a3-f178-40d8-939c-cc00271fc5e6",
+      "task_title": "Deploy project",
+      "task_description": "Deploy project",
+      "task_users": [
+        "ihe3am@gmail.com"
+      ],
+      "columnId": "29c761a4-a388-46d0-86ad-39e9a459467c",
+      "BoardId": "e8bae0a9-dff9-4482-9289-559be6b37cdf",
+      "order": 1
+    },
+    {
+      "id": "8eb06aaf-aa38-49fa-8bdb-059e8594d12a",
+      "task_title": " Dnd Functionality",
+      "task_description": "Add Dnd Functionality to app",
+      "task_users": [
+        "ihe3am@gmail.com"
+      ],
+      "columnId": "29c761a4-a388-46d0-86ad-39e9a459467c",
+      "BoardId": "e8bae0a9-dff9-4482-9289-559be6b37cdf",
+      "order": 2
+    }
+  ]
 }

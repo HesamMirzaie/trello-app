@@ -11,6 +11,14 @@ import { DeleteTask } from './DeleteTask';
 import { Avatar, AvatarFallback } from '../../ui/avatar';
 import { useSelectedBoardContext } from '../../../context/SelectedBoardContext';
 import { useEffect, useState } from 'react';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import {
+  SortableContext,
+  arrayMove,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface TaskContainerProps {
   columnId: IColumn['id'];
@@ -20,16 +28,19 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
   const [filteredTasks, setFilteredTasks] = useState<ITask[]>([]);
 
   const { selectedBoard } = useSelectedBoardContext();
-  const { data: tasks, isLoading } = useQuery<ITask[]>({
-    queryKey: ['tasks'],
+  const {
+    data: tasks,
+    isLoading,
+    refetch,
+  } = useQuery<ITask[]>({
+    queryKey: ['tasks', selectedBoard?.id],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3000/tasks?boardId=${selectedBoard?.id}`
+        `http://localhost:3000/tasks?boardId=${selectedBoard?.id}&_sort=order&_order=asc`
       );
       return response.data;
     },
   });
-  console.log(tasks);
 
   useEffect(() => {
     if (tasks) {
@@ -40,18 +51,77 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
     }
   }, [tasks, columnId]);
 
+  const handleDragEnd = async (event: any) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      const oldIndex = filteredTasks.findIndex((task) => task.id === active.id);
+      const newIndex = filteredTasks.findIndex((task) => task.id === over.id);
+
+      // Reorder the tasks locally
+      const updatedTasks = arrayMove(filteredTasks, oldIndex, newIndex);
+      setFilteredTasks(updatedTasks);
+
+      // Update the order field based on the new positions
+      const reorderedTasks = updatedTasks.map((task, index) => ({
+        ...task,
+        order: index + 1,
+      }));
+
+      // Make API calls to update the order in the backend
+      await Promise.all(
+        reorderedTasks.map(async (task) => {
+          await axios.put(`http://localhost:3000/tasks/${task.id}`, {
+            ...task,
+            order: task.order,
+          });
+        })
+      );
+
+      // Optionally, refetch tasks to ensure order is correct
+      refetch();
+    }
+  };
+
   if (isLoading) {
-    return <div className=" w-full text-center pt-2">Loading tasks...</div>;
+    return <div className="w-full text-center pt-2">Loading tasks...</div>;
   }
 
   return (
     <ScrollArea className="w-full h-full max-h-[500px] p-2 overflow-y-auto scrollbar-hidden">
-      {filteredTasks.map((task) => (
-        <TaskCard key={task.id} task={task} />
-      ))}
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext
+          items={filteredTasks.map((task) => task.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {filteredTasks.map((task) => (
+            <SortableTaskCard key={task.id} task={task} />
+          ))}
+        </SortableContext>
+      </DndContext>
     </ScrollArea>
   );
 };
+
+interface SortableTaskCardProps {
+  task: ITask;
+}
+
+function SortableTaskCard({ task }: SortableTaskCardProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: task.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <TaskCard task={task} />
+    </div>
+  );
+}
 
 function TaskCard({ task }: { task: ITask }) {
   return (
@@ -62,7 +132,7 @@ function TaskCard({ task }: { task: ITask }) {
           className="bg-blue-200 text-blue-600 dark:bg-indigo-200 dark:text-indigo-600 rounded-full"
           variant="outline"
         >
-          <p className="">Badge</p>
+          <p className="">Task</p>
         </Badge>
         <EllipsisButton>
           <EditTask task={task} />
