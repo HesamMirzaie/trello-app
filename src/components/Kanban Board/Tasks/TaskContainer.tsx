@@ -21,7 +21,7 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
 
   const { selectedBoard } = useSelectedBoardContext();
   const { data: tasks, isLoading } = useQuery<ITask[]>({
-    queryKey: ['tasks', selectedBoard?.id],
+    queryKey: ['tasks'],
     queryFn: async () => {
       const response = await axios.get(
         `http://localhost:3000/tasks?boardId=${selectedBoard?.id}`
@@ -29,19 +29,19 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
       return response.data;
     },
   });
+  console.log(tasks);
 
   useEffect(() => {
     if (tasks) {
-      // Filter tasks based on the columnId prop
       const updatedFilteredTasks = tasks.filter(
         (task) => task.columnId === columnId
       );
       setFilteredTasks(updatedFilteredTasks);
     }
-  }, [tasks, columnId]); // Dependency array includes tasks and columnId
+  }, [tasks, columnId]);
 
   if (isLoading) {
-    return <div>Loading tasks...</div>;
+    return <div className=" w-full text-center pt-2">Loading tasks...</div>;
   }
 
   return (
