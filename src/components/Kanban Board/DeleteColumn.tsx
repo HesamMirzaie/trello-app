@@ -14,6 +14,7 @@ import { Button } from '../ui/button';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { Trash2 } from 'lucide-react';
+import { ITask } from '../../types/Task';
 
 interface DeleteColumnProps {
   columnId: IColumn['id'];
@@ -26,7 +27,7 @@ export const DeleteColumn = ({ columnId }: DeleteColumnProps) => {
   const deleteTasksByColumnId = async (columnId: string) => {
     const { data: tasks } = await axios.get(`http://localhost:3000/tasks`);
     const tasksToDelete = tasks.filter(
-      (task: any) => task.columnId === columnId
+      (task: ITask) => task.columnId === columnId
     );
 
     // Delete each task individually

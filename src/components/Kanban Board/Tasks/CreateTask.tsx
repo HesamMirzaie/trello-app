@@ -12,7 +12,7 @@ import { Input } from '../../ui/input';
 import { Textarea } from '../../ui/textarea';
 import { useState, memo } from 'react';
 import { Button } from '../../ui/button';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -32,11 +32,6 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
   const queryClient = useQueryClient();
   const { user } = useAuthUser();
   const { selectedBoard } = useSelectedBoardContext();
-
-  // Fetch existing tasks
-  const { data: tasks } = useQuery<ITask[]>({
-    queryKey: ['tasks'],
-  });
 
   // Add task mutation
   const addTaskMutation = useMutation({

@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { HomePage } from './pages/HomePage';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { UserProvider } from './context/UserContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { Login } from './pages/Login';
@@ -46,7 +45,6 @@ createRoot(document.getElementById('root')!).render(
           </ThemeProvider>
         </SelectedBoardProvider>
       </UserProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </StrictMode>
 );

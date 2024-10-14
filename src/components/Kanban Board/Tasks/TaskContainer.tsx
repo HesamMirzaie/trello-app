@@ -13,6 +13,7 @@ import { useSelectedBoardContext } from '../../../context/SelectedBoardContext';
 import { useEffect, useState } from 'react';
 import {
   DndContext,
+  DragEndEvent,
   MouseSensor,
   closestCenter,
   useSensor,
@@ -65,12 +66,12 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
     }
   }, [tasks, columnId]);
 
-  const handleDragEnd = async (event: any) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
 
-    if (active.id !== over.id) {
+    if (active.id !== over?.id) {
       const oldIndex = filteredTasks.findIndex((task) => task.id === active.id);
-      const newIndex = filteredTasks.findIndex((task) => task.id === over.id);
+      const newIndex = filteredTasks.findIndex((task) => task.id === over?.id);
 
       // Reorder the tasks locally
       const updatedTasks = arrayMove(filteredTasks, oldIndex, newIndex);

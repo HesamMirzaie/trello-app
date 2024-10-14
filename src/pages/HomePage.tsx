@@ -211,8 +211,20 @@ export const HomePage = () => {
     </div>
   );
 };
-
-function FeatureCard({ icon, title, description, color, isDarkMode }: any) {
+interface FeatureCardProps {
+  icon: React.ReactNode; // Type for icon (could be an SVG, image, etc.)
+  title: string; // Title of the card
+  description: string; // Description text of the card
+  color: string; // Color string (e.g., 'red', 'blue', etc.)
+  isDarkMode: boolean; // Boolean to check if dark mode is enabled
+}
+function FeatureCard({
+  icon,
+  title,
+  description,
+  color,
+  isDarkMode,
+}: FeatureCardProps) {
   return (
     <div
       className={`${
