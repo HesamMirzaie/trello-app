@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "json-server --watch ./src/server/data.json"
+    "server": "json-server --watch ./src/server/data.json",
+    "start": "concurrently \"npm run preview\" \"npm run server\""
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.2",
@@ -50,6 +51,7 @@
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
+    "concurrently": "^9.0.1",
     "eslint": "^9.11.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",
