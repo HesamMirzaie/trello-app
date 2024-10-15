@@ -39,16 +39,13 @@
 
 <h2>Screenshots</h2>
 
-<img src="link-to-your-screenshot-1" alt="Description of Screenshot 1">
-<p><em>Description of Screenshot 1</em></p>
+<img src="./Screenshot 2024-10-14 224403.png" alt="Description of Screenshot 1">
 
-<img src="link-to-your-screenshot-2" alt="Description of Screenshot 2">
-<p><em>Description of Screenshot 2</em></p>
+<img src="./Screenshot 2024-10-14 224419.png" alt="Description of Screenshot 2">
 
-<img src="link-to-your-screenshot-3" alt="Description of Screenshot 3">
-<p><em>Description of Screenshot 3</em></p>
+<img src="./Screenshot 2024-10-14 224443.png" alt="Description of Screenshot 3">
 
-<p>(Replace "link-to-your-screenshot" with the actual URLs of your images and provide descriptions for each screenshot.)</p>
+<p>http://185.206.94.90/</p>
 
 <h2>Installation</h2>
 
