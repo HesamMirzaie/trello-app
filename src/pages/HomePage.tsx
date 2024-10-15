@@ -91,7 +91,7 @@ export const HomePage = () => {
               isDarkMode ? 'text-white' : 'text-gray-900'
             }`}
           >
-            Welcome to Task Master
+            Welcome to Task Master App
           </h1>
           <p
             className={`mt-6 text-xl sm:text-2xl max-w-3xl mx-auto ${
