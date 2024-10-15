@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "json-server --watch ./src/server/data.json",
-    "start": "concurrently \"npm run preview -- --host=0.0.0.0 --port=80\" \"npm run server\""
+    "start": "concurrently \"npm run preview -- --host 0.0.0.0 --port 80\" \"json-server --host 0.0.0.0 --watch ./src/server/data.json\""
   },
   "dependencies": {
     "@dicebear/collection": "^9.2.2",
