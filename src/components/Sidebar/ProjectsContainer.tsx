@@ -13,7 +13,7 @@ export default function ProjectsContainer() {
   const { user } = useAuthUser();
 
   const fetchBoards = async (): Promise<IBoard[]> => {
-    const response = await axios.get('http://localhost:3000/boards');
+    const response = await axios.get('http://37.152.180.88:3000/boards');
     return response.data;
   };
 

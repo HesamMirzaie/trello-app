@@ -27,7 +27,7 @@ export const CreateColumn = () => {
   const addColumnMutation = useMutation({
     mutationFn: async (newCol: IColumn) => {
       const response = await axios.post(
-        'http://localhost:3000/columns',
+        'http://37.152.180.88:3000/columns',
         newCol
       );
       return response.data;

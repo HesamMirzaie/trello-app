@@ -27,7 +27,7 @@ export const EditColumn = ({ columnId }: EditColumnProps) => {
     queryKey: ['column'],
     queryFn: async () => {
       const response = await axios.get<IColumn>(
-        `http://localhost:3000/columns/${columnId}`
+        `http://37.152.180.88:3000/columns/${columnId}`
       );
       return response.data;
     },
@@ -42,7 +42,7 @@ export const EditColumn = ({ columnId }: EditColumnProps) => {
 
   const updateColumnMutation = useMutation({
     mutationFn: async () => {
-      await axios.patch(`http://localhost:3000/columns/${columnId}`, {
+      await axios.patch(`http://37.152.180.88:3000/columns/${columnId}`, {
         column_title: newTitle,
       });
     },

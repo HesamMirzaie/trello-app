@@ -46,7 +46,7 @@ export const SignUp = () => {
 
   const userMutation = useMutation({
     mutationFn: (newUser: IUser) => {
-      return axios.post('http://localhost:3000/users', newUser);
+      return axios.post('http://37.152.180.88:3000/users', newUser);
     },
     onSuccess: () => {
       reset();

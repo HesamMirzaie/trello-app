@@ -41,7 +41,7 @@ export const AddUserToBoardButton = () => {
 
       // If user doesn't exist, proceed with adding the user
       const response = await axios.patch(
-        `http://localhost:3000/boards/${selectedBoard!.id}`,
+        `http://37.152.180.88:3000/boards/${selectedBoard!.id}`,
         {
           board_users: [...selectedBoard!.board_users, newUser],
         }

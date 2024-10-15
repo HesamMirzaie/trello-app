@@ -25,14 +25,14 @@ export const DeleteColumn = ({ columnId }: DeleteColumnProps) => {
   const queryClient = useQueryClient();
 
   const deleteTasksByColumnId = async (columnId: string) => {
-    const { data: tasks } = await axios.get(`http://localhost:3000/tasks`);
+    const { data: tasks } = await axios.get(`http://37.152.180.88:3000/tasks`);
     const tasksToDelete = tasks.filter(
       (task: ITask) => task.columnId === columnId
     );
 
     // Delete each task individually
     for (const task of tasksToDelete) {
-      await axios.delete(`http://localhost:3000/tasks/${task.id}`);
+      await axios.delete(`http://37.152.180.88:3000/tasks/${task.id}`);
     }
   };
 
@@ -41,7 +41,7 @@ export const DeleteColumn = ({ columnId }: DeleteColumnProps) => {
       // First, delete the tasks related to the column
       await deleteTasksByColumnId(columnId);
       // Then, delete the column itself
-      await axios.delete(`http://localhost:3000/columns/${columnId}`);
+      await axios.delete(`http://37.152.180.88:3000/columns/${columnId}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['columns'] });

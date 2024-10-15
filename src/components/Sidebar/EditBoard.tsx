@@ -31,7 +31,7 @@ export const EditBoard = ({ boardId }: EditBoardButtonProps) => {
     queryKey: ['boards', boardId],
     queryFn: async () => {
       const response = await axios.get<IBoard>(
-        `http://localhost:3000/boards/${boardId}`
+        `http://37.152.180.88:3000/boards/${boardId}`
       );
       return response.data;
     },
@@ -47,7 +47,7 @@ export const EditBoard = ({ boardId }: EditBoardButtonProps) => {
 
   const updateBoardMutation = useMutation({
     mutationFn: async () => {
-      await axios.patch(`http://localhost:3000/boards/${boardId}`, {
+      await axios.patch(`http://37.152.180.88:3000/boards/${boardId}`, {
         board_title: boardTitle,
         board_description: boardDescription,
       });

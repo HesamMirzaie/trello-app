@@ -32,7 +32,7 @@ export const CreateBoard = () => {
   const createBoardMutation = useMutation({
     mutationFn: async (newBoard: IBoard) => {
       const response = await axios.post<IBoard>(
-        'http://localhost:3000/boards',
+        'http://37.152.180.88:3000/boards',
         newBoard
       );
       return response.data;

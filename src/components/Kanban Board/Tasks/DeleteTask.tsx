@@ -25,7 +25,7 @@ export const DeleteTask = ({ taskId }: DeleteTaskProps) => {
 
   const deleteColumnMutation = useMutation({
     mutationFn: async () => {
-      await axios.delete(`http://localhost:3000/tasks/${taskId}`);
+      await axios.delete(`http://37.152.180.88:3000/tasks/${taskId}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });

@@ -43,7 +43,7 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
     queryKey: ['tasks', selectedBoard?.id],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:3000/tasks?boardId=${selectedBoard?.id}&_sort=order&_order=asc`
+        `http://37.152.180.88:3000/tasks?boardId=${selectedBoard?.id}&_sort=order&_order=asc`
       );
       return response.data;
     },
@@ -86,7 +86,7 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
       // Make API calls to update the order in the backend
       await Promise.all(
         reorderedTasks.map(async (task) => {
-          await axios.put(`http://localhost:3000/tasks/${task.id}`, {
+          await axios.put(`http://37.152.180.88:3000/tasks/${task.id}`, {
             ...task,
             order: task.order,
           });

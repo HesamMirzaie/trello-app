@@ -40,7 +40,7 @@ export const EditTask = ({ task }: EditColumnProps) => {
     queryKey: ['tasks', task.id],
     queryFn: async () => {
       const response = await axios.get<ITask>(
-        `http://localhost:3000/tasks/${task.id}`
+        `http://37.152.180.88:3000/tasks/${task.id}`
       );
       return response.data;
     },
@@ -62,7 +62,7 @@ export const EditTask = ({ task }: EditColumnProps) => {
       if (userAlreadyExists) {
         console.log('User already exists in the task');
       }
-      await axios.patch(`http://localhost:3000/tasks/${task.id}`, {
+      await axios.patch(`http://37.152.180.88:3000/tasks/${task.id}`, {
         task_title: newTitle,
         task_description: newDescription,
         task_users: [...task.task_users, newUser],

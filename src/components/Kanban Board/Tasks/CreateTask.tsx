@@ -36,7 +36,10 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
   // Add task mutation
   const addTaskMutation = useMutation({
     mutationFn: async (newTask: ITask) => {
-      const response = await axios.post('http://localhost:3000/tasks', newTask);
+      const response = await axios.post(
+        'http://37.152.180.88:3000/tasks',
+        newTask
+      );
       return response.data;
     },
     onSuccess: async () => {

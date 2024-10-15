@@ -13,7 +13,7 @@ export const KanbanBoard = () => {
     if (!selectedBoard?.id) return [];
 
     const response = await axios.get(
-      `http://localhost:3000/columns?boardId=${selectedBoard.id}`
+      `http://37.152.180.88:3000/columns?boardId=${selectedBoard.id}`
     );
 
     return response.data;
