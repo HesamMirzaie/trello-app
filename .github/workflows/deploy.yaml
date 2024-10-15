@@ -1,0 +1,21 @@
+name: Deploy to server
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Connect to server
+        uses: appleboy/ssh-action@v1.1.0
+        with:
+          host: 185.206.94.90
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /home/ubuntu/trello-app
+            git pull
+            npm run build
