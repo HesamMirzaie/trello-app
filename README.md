@@ -12,6 +12,9 @@
 
 <p>Task Master is a task management application similar to Trello. Users can create accounts, set up boards for themselves, and invite other users to collaborate on those boards. Within each board, users can create columns and tasks, and easily drag and drop tasks to change their order and manage their workflow effectively.</p>
 
+<h2>Live Demo</h2>
+<p>http://185.206.94.90/</p>
+
 <h2>Technologies Used</h2>
 
 <h3>Frontend:</h3>
@@ -44,8 +47,6 @@
 <img src="./Screenshot 2024-10-14 224419.png" alt="Description of Screenshot 2">
 
 <img src="./Screenshot 2024-10-14 224443.png" alt="Description of Screenshot 3">
-
-<p>http://185.206.94.90/</p>
 
 <h2>Installation</h2>
 
