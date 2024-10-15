@@ -10,7 +10,7 @@ export const useFetchUsers = () => {
   } = useQuery<IUser[]>({
     queryKey: ['users'],
     queryFn: async () => {
-      const response = await axios.get('http://0.0.0.0:3000/users');
+      const response = await axios.get('http://37.152.180.88:3000/users');
       return response.data;
     },
   });
