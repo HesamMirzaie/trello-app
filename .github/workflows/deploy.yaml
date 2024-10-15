@@ -14,20 +14,7 @@ jobs:
         with:
           host: 185.206.94.90
           username: ubuntu
-          key: AAABAQCpX+2+eZrcD4525V6QKae88DGWEzA1P2z8+SHW7po+0wM9mGAX1h6bGU6x
-            +MNOydfPqyO7kUmAYV4xPil7/AQNSD7JkBwckgojcuOzssqt+IlSvcc39O4H0eek
-            e0AWAhc2q7fyfS90ac9NOSI8wk3krL2i+lCTut62+Te1n3r43xAlsr8q1+dW9zHV
-            ul5dX3r6j6dge7EGA9VEs+yXdSV2CfevgMSILw6waLVil78Qy/q4Z8JuKrYRCXNs
-            DvH3zXUDJjxJt4B3WZiaS/JDwSt+k1ncO6y67IvG4nAD8f6803tqCD7xAGjtsHzG
-            y8tqx9F9Lt6Y58gC6Q8qUiMHYYVxAAAAgQD14IpDBm3r4eaPBNNOMlEC9oNoE79J
-            docaJkCxTgzguhWvpCNuoDLIUAIFun0ohDhnA2QrGGPDBhQirSZaesHtz1pQgJbh
-            xOEBSIG/bDf2yNjdb2TXi7uUJpl80i1uX6gI5L9aH9jb0C6nmmeahTCFcA+Du5uL
-            NedqQl3f3s0mTwAAAIEA6S3+WTnds/vnHTlK1hKSLC9c7CPRnmAUqfe7jhLf/QPM
-            Xze5Hhl3rUt52wZiwMG62TuqoeZ3GZg5NHdbjhTp0OiXhlVNkvAAsarIeLgbct8B
-            qt7hKo4xkzEb0P9EzcJSJhOWZsvER1mgxDNY7vWdKmQ5s0BHJ/QH9VwLrd/7vw8A
-            AACAUwu84BFz1LLRtf+lpv2el4UGYld5JVKv2XBUowNzcxOfRTg+1S/jeKKBwOqh
-            E143YwyLCUe/oPCREpJqReaAfT5hka/Rh/lu5/Pk9o23Z/QWWD4IJ2YwYtKddOl1
-            ClokwSOTPxUnO5jHxHRd2LwXTenMiwY1Ve/rHzjqyn/b4Gk=
+          key: ${{ secrets.SSH_KEY }}
           script: |
             cd /home/ubuntu/trello-app
             git pull
