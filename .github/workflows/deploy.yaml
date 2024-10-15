@@ -12,7 +12,7 @@ jobs:
       - name: Connect to server
         uses: appleboy/ssh-action@v1.1.0
         with:
-          host: 185.206.94.90
+          host: 37.152.180.88
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           script: |
