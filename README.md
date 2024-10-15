@@ -1,50 +1,104 @@
-# React + TypeScript + Vite
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Master App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #eaeaea;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        pre {
+            background-color: #eaeaea;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h1>Task Master App</h1>
 
-Currently, two official plugins are available:
+<p>Welcome to the Task Master App!</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<p>Task Master is a task management application similar to Trello. Users can create accounts, set up boards for themselves, and invite other users to collaborate on those boards. Within each board, users can create columns and tasks, and easily drag and drop tasks to change their order and manage their workflow effectively.</p>
 
-## Expanding the ESLint configuration
+<h2>Technologies Used</h2>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<h3>Frontend:</h3>
+<ul>
+    <li>React with Vite</li>
+    <li>React Router DOM for routing</li>
+    <li>TanStack Query for asynchronous state management</li>
+    <li>Axios for data fetching</li>
+    <li>React Hook Form for the login page</li>
+    <li>Shadcn for UI components</li>
+</ul>
 
-- Configure the top-level `parserOptions` property like this:
+<h3>Backend:</h3>
+<ul>
+    <li>JSON Server to simulate a RESTful API and manage data</li>
+</ul>
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+<h2>Features</h2>
+<ul>
+    <li>User account creation and authentication</li>
+    <li>Board creation and collaboration</li>
+    <li>Task and column management</li>
+    <li>Drag-and-drop functionality for task organization</li>
+</ul>
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+<h2>Screenshots</h2>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+<img src="link-to-your-screenshot-1" alt="Description of Screenshot 1">
+<p><em>Description of Screenshot 1</em></p>
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<img src="link-to-your-screenshot-2" alt="Description of Screenshot 2">
+<p><em>Description of Screenshot 2</em></p>
+
+<img src="link-to-your-screenshot-3" alt="Description of Screenshot 3">
+<p><em>Description of Screenshot 3</em></p>
+
+<p>(Replace "link-to-your-screenshot" with the actual URLs of your images and provide descriptions for each screenshot.)</p>
+
+<h2>Installation</h2>
+
+<p>To run the Task Master App locally, follow these steps:</p>
+<pre><code>1. Clone the repository:
+   git clone https://github.com/yourusername/task-master-app.git
+2. Navigate to the project directory:
+   cd task-master-app
+3. Install the dependencies:
+   npm install
+4. Start the development server:
+   npm run dev
+</code></pre>
+
+<h2>Contributing</h2>
+
+<p>Contributions are welcome! If you have suggestions for improvements or new features, please open an issue or submit a pull request.</p>
+
+<h2>License</h2>
+
+<p>This project is licensed under the MIT License.</p>
+
+</body>
+</html>
