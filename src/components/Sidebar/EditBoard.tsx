@@ -94,7 +94,7 @@ export const EditBoard = ({ boardId }: EditBoardButtonProps) => {
             'Editing...'
           ) : (
             <>
-              <p>Edit</p>{' '}
+              <p>Edit </p>{' '}
             </>
           )}
         </Button>
