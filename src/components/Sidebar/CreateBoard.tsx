@@ -63,6 +63,12 @@ export const CreateBoard = () => {
     createBoardMutation.mutate(newBoard);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleCreateBoard();
+    }
+  };
+
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
@@ -71,11 +77,20 @@ export const CreateBoard = () => {
           variant="outline"
           onClick={() => setIsDialogOpen(true)}
         >
-          <Plus className="h-5 w-5" />
-          <span>Add Project</span>
+          {createBoardMutation.isPending ? (
+            'Adding...'
+          ) : (
+            <>
+              {' '}
+              <Plus /> <p>Add Board</p>{' '}
+            </>
+          )}
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto">
+      <DialogContent
+        onKeyDown={handleKeyDown} // Attach the keydown handler
+        className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto"
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-indigo-400">
             Create a new board
@@ -129,7 +144,7 @@ export const CreateBoard = () => {
             }
             className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-indigo-600 dark:text-gray-200 dark:hover:bg-indigo-700 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
-            Create Board
+            {createBoardMutation.isPending ? 'Creating...' : 'Create Board'}
           </Button>
         </DialogFooter>
       </DialogContent>

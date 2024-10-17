@@ -73,10 +73,11 @@ export const DeleteColumn = ({ columnId }: DeleteColumnProps) => {
             </Button>
           </AlertDialogCancel>
           <Button
+            disabled={deleteColumnMutation.isPending}
             onClick={handleDelete}
             className="bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Delete
+            {deleteColumnMutation.isPending ? 'Deleting...' : 'Delete Column'}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

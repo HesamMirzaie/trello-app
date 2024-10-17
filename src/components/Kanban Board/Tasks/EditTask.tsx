@@ -65,7 +65,9 @@ export const EditTask = ({ task }: EditColumnProps) => {
       await axios.patch(`http://37.152.180.88:3000/tasks/${task.id}`, {
         task_title: newTitle,
         task_description: newDescription,
-        task_users: [...task.task_users, newUser],
+        task_users: !newUser.trim()
+          ? [...task.task_users]
+          : [...task.task_users, newUser],
       });
     },
     onSuccess: () => {
@@ -96,6 +98,12 @@ export const EditTask = ({ task }: EditColumnProps) => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSave();
+    }
+  };
+
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
@@ -104,10 +112,19 @@ export const EditTask = ({ task }: EditColumnProps) => {
           className="w-full text-sm py-1 text-blue-600 hover:text-blue-700 dark:text-indigo-400 dark:hover:text-indigo-300 border-blue-200 hover:border-blue-300 dark:border-indigo-800 dark:hover:border-indigo-700 hover:bg-blue-50 dark:hover:bg-indigo-900 transition-colors duration-200"
         >
           <Edit className="w-4 h-4 mr-2" />
-          Edit
+          {updateTaskMutation.isPending ? (
+            'Editing...'
+          ) : (
+            <>
+              <p>Edit</p>{' '}
+            </>
+          )}
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto">
+      <DialogContent
+        onKeyDown={handleKeyDown} // Attach the keydown handler
+        className="bg-white text-gray-800 border border-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto"
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-indigo-400">
             Edit Task
@@ -184,10 +201,13 @@ export const EditTask = ({ task }: EditColumnProps) => {
 
         <DialogFooter>
           <Button
+            disabled={
+              !newTitle || !newDescription || updateTaskMutation.isPending
+            }
             onClick={handleSave}
             className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-indigo-600 dark:text-gray-200 dark:hover:bg-indigo-700 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
-            Update Task
+            {updateTaskMutation.isPending ? 'Editing...' : 'Edit Task'}
           </Button>
         </DialogFooter>
       </DialogContent>

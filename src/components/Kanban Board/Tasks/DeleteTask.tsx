@@ -23,7 +23,7 @@ export const DeleteTask = ({ taskId }: DeleteTaskProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const deleteColumnMutation = useMutation({
+  const deleteTaskMutation = useMutation({
     mutationFn: async () => {
       await axios.delete(`http://37.152.180.88:3000/tasks/${taskId}`);
     },
@@ -36,7 +36,7 @@ export const DeleteTask = ({ taskId }: DeleteTaskProps) => {
     },
   });
   const handleDelete = () => {
-    deleteColumnMutation.mutate();
+    deleteTaskMutation.mutate();
   };
 
   return (
@@ -73,7 +73,7 @@ export const DeleteTask = ({ taskId }: DeleteTaskProps) => {
             onClick={handleDelete}
             className="bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Delete
+            {deleteTaskMutation.isPending ? 'Deleting...' : 'Delete Task'}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

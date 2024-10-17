@@ -83,7 +83,7 @@ export const CreateColumn = () => {
         onKeyDown={handleKeyDown} // Attach the keydown handler
       >
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
+          <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-indigo-400">
             Create a new column
           </DialogTitle>
           <DialogDescription className="text-gray-600 dark:text-gray-400 mt-2">
@@ -110,7 +110,7 @@ export const CreateColumn = () => {
           <Button
             onClick={addColumn}
             disabled={!newColumnTitle || addColumnMutation.isPending}
-            className="bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
+            className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
             {addColumnMutation.isPending ? 'Adding...' : 'Add Column'}
           </Button>

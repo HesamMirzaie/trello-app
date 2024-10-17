@@ -48,8 +48,6 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
       return response.data;
     },
   });
-  console.log(selectedBoard?.id);
-  console.log(tasks);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
