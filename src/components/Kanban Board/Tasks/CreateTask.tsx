@@ -91,7 +91,7 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
           ) : (
             <>
               {' '}
-              <Plus /> <p>Add Column</p>{' '}
+              <Plus /> <p>Add Task</p>{' '}
             </>
           )}
         </Button>
