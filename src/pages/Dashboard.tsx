@@ -27,13 +27,13 @@ export const Dashboard = () => {
       <KanbanBoard />
       {alert && (
         <p className=" absolute right-5 bottom-5 bg-green-300 rounded-md p-4">
-          This site is still under the work
+          This site is still a work in progress.
           <X
             onClick={() => setAlert(false)}
             className=" absolute top-1 right-1 cursor-pointer"
           />
           <span className=" block">
-            We Will add Drag and Drop Between Columns ASAP!!
+            We will add drag-and-drop functionality between columns ASAP!
           </span>
         </p>
       )}
