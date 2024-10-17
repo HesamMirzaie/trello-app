@@ -17,9 +17,6 @@ export const ColumnContainer = ({ column }: ColumnContainerProps) => {
         <div className="flex flex-1 gap-x-2">
           <div className="w-1.5 h-1.5 bg-green-700 rounded-full my-auto" />
           <div className="text-lg">{column.column_title}</div>
-          <div className="flex justify-center items-center px-2 rounded-lg">
-            <div>4</div>
-          </div>
         </div>
         <EllipsisButton>
           <EditColumn columnId={column.id} />

@@ -27,42 +27,13 @@ export const DeleteBoard = ({ boardId }: DeleteBoardProps) => {
   const { selectedBoard, setSelectedBoard } = useSelectedBoardContext();
   console.log(boardId);
 
-  const deleteTasksByBoardId = async (boardId: string) => {
-    const response = await axios.get(
-      `http://37.152.180.88:3000/tasks?boardId=${boardId}`
-    );
-    const tasks = response.data;
-
-    const deleteTaskPromises = tasks.map((task: { id: string }) =>
-      axios.delete(`http://37.152.180.88:3000/tasks/${task.id}`)
-    );
-
-    await Promise.all(deleteTaskPromises);
-  };
-
-  const deleteColumnsByBoardId = async (boardId: string) => {
-    const response = await axios.get(
-      `http://37.152.180.88:3000/columns?boardId=${boardId}`
-    );
-    const columns = response.data;
-
-    const deleteColumnPromises = columns.map((column: { id: string }) =>
-      axios.delete(`http://37.152.180.88:3000/columns/${column.id}`)
-    );
-
-    await Promise.all(deleteColumnPromises);
-  };
-
   const deleteBoardMutation = useMutation({
     mutationFn: async (id: string) => {
       await axios.delete(`http://37.152.180.88:3000/boards/${id}`);
-      await deleteColumnsByBoardId(id);
-      await deleteTasksByBoardId(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['boards'] });
-      queryClient.invalidateQueries({ queryKey: ['columns'] });
-      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+
       setIsDialogOpen(false);
     },
     onError: (error) => {

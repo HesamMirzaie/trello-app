@@ -40,7 +40,7 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
     isLoading,
     refetch,
   } = useQuery<ITask[]>({
-    queryKey: ['tasks', selectedBoard?.id],
+    queryKey: ['tasks'],
     queryFn: async () => {
       const response = await axios.get(
         `http://37.152.180.88:3000/tasks?boardId=${selectedBoard?.id}&_sort=order&_order=asc`
@@ -48,6 +48,9 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
       return response.data;
     },
   });
+  console.log(selectedBoard?.id);
+  console.log(tasks);
+
   const sensors = useSensors(
     useSensor(MouseSensor, {
       // Customize activation constraints
@@ -93,7 +96,6 @@ export const TaskContainer = ({ columnId }: TaskContainerProps) => {
         })
       );
 
-      // Optionally, refetch tasks to ensure order is correct
       refetch();
     }
   };

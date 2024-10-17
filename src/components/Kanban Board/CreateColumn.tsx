@@ -53,19 +53,35 @@ export const CreateColumn = () => {
     setIsDialogOpen(false);
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      addColumn();
+    }
+  };
+
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button
           onClick={() => setIsDialogOpen(true)}
           variant="outline"
-          className="h-[40px] w-[350px] min-w-[350px] cursor-pointer flex gap-x-2 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700 dark:border-indigo-500"
+          disabled={addColumnMutation.isPending}
+          className=" w-[350px] min-w-[350px] mt-[52px] text-blue-600 dark:text-white bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-gray-700 border-blue-200 dark:border-indigo-500 px-4 py-2 flex items-center space-x-2 transition-colors duration-200 font-bold"
         >
-          <Plus />
-          Add Column
+          {addColumnMutation.isPending ? (
+            'Adding...'
+          ) : (
+            <>
+              {' '}
+              <Plus /> <p>Add Column</p>{' '}
+            </>
+          )}
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto">
+      <DialogContent
+        className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg shadow-xl max-w-md mx-auto"
+        onKeyDown={handleKeyDown} // Attach the keydown handler
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
             Create a new column
@@ -96,7 +112,7 @@ export const CreateColumn = () => {
             disabled={!newColumnTitle || addColumnMutation.isPending}
             className="bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors duration-200 rounded-full px-6 py-2 shadow-md hover:shadow-lg"
           >
-            Add Column
+            {addColumnMutation.isPending ? 'Adding...' : 'Add Column'}
           </Button>
         </DialogFooter>
       </DialogContent>

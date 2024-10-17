@@ -32,14 +32,12 @@ export const AddUserToBoardButton = () => {
 
   const addUserToBoard = async () => {
     try {
-      // Fetch the current board users
       const userAlreadyExists = selectedBoard!.board_users.some(
         (email) => email === newUser
       );
 
       if (userAlreadyExists) return;
 
-      // If user doesn't exist, proceed with adding the user
       const response = await axios.patch(
         `http://37.152.180.88:3000/boards/${selectedBoard!.id}`,
         {
@@ -71,6 +69,12 @@ export const AddUserToBoardButton = () => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleAddUser();
+    }
+  };
+
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
@@ -83,7 +87,10 @@ export const AddUserToBoardButton = () => {
           <span>Add Member</span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+      <DialogContent
+        className="sm:max-w-[425px] bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+        onKeyDown={handleKeyDown} // Attach the keydown handler
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold text-blue-600 dark:text-indigo-400">
             Add User to Board

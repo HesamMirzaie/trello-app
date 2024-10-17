@@ -71,20 +71,36 @@ export const CreateTask = memo(({ columnId }: CreateTaskProps) => {
     setIsDialogOpen(false);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleAddTask();
+    }
+  };
+
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogTrigger asChild>
         <Button
           variant="outline"
+          disabled={addTaskMutation.isPending}
           className="text-blue-600 dark:text-white bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-gray-700 border-blue-200 dark:border-indigo-500 px-4 py-2 flex items-center space-x-2 transition-colors duration-200"
           onClick={() => setIsDialogOpen(true)}
         >
-          <Plus className="h-5 w-5" />
-          <span>Add New Task</span>
+          {addTaskMutation.isPending ? (
+            'Adding...'
+          ) : (
+            <>
+              {' '}
+              <Plus /> <p>Add Column</p>{' '}
+            </>
+          )}
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-indigo-500 rounded-lg shadow-xl max-w-md mx-auto">
+      <DialogContent
+        onKeyDown={handleKeyDown} // Attach the keydown handler
+        className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-indigo-500 rounded-lg shadow-xl max-w-md mx-auto"
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-blue-600 dark:text-indigo-400">
             Create a new task
